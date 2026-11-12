@@ -17,8 +17,10 @@ jobs:
   link:
     runs-on: ubuntu-latest
     steps:
-      - uses: skoroapps/review-on-iphone@v1
+      - uses: skoroapps-hq/review-on-iphone@v1
 ```
+
+To pin an exact version, use the commit SHA instead of `v1`, for example `skoroapps-hq/review-on-iphone@<sha>`.
 
 By default it adds one comment to pull requests from branches starting with `claude/`, `codex/`, `copilot/`, `cursor/` or `devin/`. It never comments twice on the same pull request.
 
