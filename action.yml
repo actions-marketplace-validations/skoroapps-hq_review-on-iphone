@@ -1,0 +1,41 @@
+name: Review on iPhone
+description: Add a "Review on iPhone" link to pull requests from AI agents. It opens the PR in Code Viewer on iPhone or iPad.
+author: Skoroapps
+branding:
+  icon: smartphone
+  color: blue
+inputs:
+  branch-prefixes:
+    description: Comma-separated branch prefixes treated as agent PRs.
+    default: claude/,codex/,copilot/,cursor/,devin/
+  authors:
+    description: Comma-separated PR author logins treated as agent PRs, for example a bot account.
+    default: ''
+  all-prs:
+    description: Set to true to add the link to every pull request.
+    default: 'false'
+  mode:
+    description: Where to put the link, "comment" or "description".
+    default: comment
+  text:
+    description: Link text.
+    default: Review on iPhone
+  token:
+    description: Token with pull-requests write access.
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: '"$GITHUB_ACTION_PATH/link.sh"'
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        IN_PREFIXES: ${{ inputs.branch-prefixes }}
+        IN_AUTHORS: ${{ inputs.authors }}
+        IN_ALL: ${{ inputs.all-prs }}
+        IN_MODE: ${{ inputs.mode }}
+        IN_TEXT: ${{ inputs.text }}
+        REPO: ${{ github.repository }}
+        NUM: ${{ github.event.pull_request.number }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        AUTHOR: ${{ github.event.pull_request.user.login }}
